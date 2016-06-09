@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block content %}
+<h3 class="ui dividing header">数据包文件管理</h3>
+  <div class="ui two column fitted stackable grid">
+	<!--column1-->
+	<div class="ui eleven wide column">
+  	<div class="ui segment">
+		<table class="ui black celled table">
+		  <thead>
+		    <tr><tr>
+		      <th>文件名</th>
+		      <th>数据包数量</th>
+		      <th>文件大小</th>
+		      <th class="center aligned">操作</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		  {% for CapFile in CapFiles %}
+		    <tr>
+		      <td width="40%">{{ CapFile.filename }}</td>
+		      <td>{{ CapFile.filepcap }}</td>
+		      <td width="20%">{{ CapFile.filesize }}</td>
+		      <td class="right aligned collapsing">
+		        <div class="ui fitted toggle checkbox">
+		          <input type="checkbox" name="checkoption" value="{{ CapFile.id }}"><label></label>
+		        </div>
+		      </td>
+		    </tr>
+		  {% endfor %}
+		  </tbody>
+		  <tfoot class="full-width">
+		    <tr>
+		      <th colspan="4">
+		        <div class="ui black small right floated button" id="analyze-button">
+		          <i class="search icon" ></i>分析
+		        </div>
+		        <div class="ui small button" id="delete-button">
+		          删除
+		        </div>
+		        <div class="ui small button" id="download-button">
+		          下载
+		        </div>
+		      </th>
+		    </tr>
+		  </tfoot>
+		</table>
+
+	<div class="ui small del modal " id='del-confirm'>
+	    <div class="header">
+	      删除文件
+	    </div>
+	    <div class="content">
+	      <p>你确定要删除所选文件吗?</p>
+	    </div>
+	    <div class="actions">
+	      <div class="ui negative button">
+	        取消
+	      </div>
+	      <div class="ui positive right labeled icon button">
+	        确定
+	        <i class="checkmark icon"></i>
+	      </div>
+	    </div>
+	</div>
+
+	<div class="ui small ok modal" id='upload-ok'>
+	    <div class="header">
+	      上传文件
+	    </div>
+	    <div class="content">
+	      <p>上传文件成功!</p>
+	    </div>
+	    <div class="actions">
+	      <div class="ui positive right labeled icon button">
+	        确定
+	        <i class="checkmark icon"></i>
+	      </div>
+	    </div>
+	</div>
+
+	</div>
+	</div>
+
+	<!--column2-->
+	<div class="ui five wide column">
+	<div class="ui segment">
+	  <div class="field">
+		<h5 class="ui dividing header">上传Pcap文件</h5>
+		<span class="fluid ui black button fileinput-button"><i class="cloud upload icon"></i>上传
+		<input id='fileupload' type="file" name="pcapfile" data-url="/upload">
+		</span>
+		<br/>
+		<div id="upprogress" class="ui green file progress">
+		  <div class="progress">
+		    <div class="bar"></div>
+		  </div>
+		  <div class="label" id='progresslabel'></div>
+		</div>
+	  </div>
+	</div>
+	</div>
+<script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+{% endblock %}
