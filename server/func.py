@@ -375,7 +375,7 @@ def get_web(file):
     pcap = rdpcap(UPLOAD_FOLDER + file)
     for packet in pcap:
         if TCP in packet:
-            print packet.display()
+            # print packet.display()
             if packet.getlayer('TCP').dport == 80 or packet.getlayer('TCP').dport == 8080:
                 webpkts.append(packet)
     for packet in webpkts:
